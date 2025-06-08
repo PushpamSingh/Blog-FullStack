@@ -11,15 +11,17 @@ export const HomePage=()=>{
         const fetchPosts=async()=>{
             try {
                 const response=await postService.getPosts();
-                if(response){
                     setPosts(response?.documents)
-                }
+                
             } catch (error) {
-                console.log("Error :: In :: HomePage :: ",error);
+                // console.log("Error :: In :: HomePage :: ",error);
                 throw error;  
             }
         }
+
+        if(authStatus){
         fetchPosts()
+        }
     },[])
   
     if(posts?.length===0 && !authStatus){

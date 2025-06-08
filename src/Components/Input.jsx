@@ -27,6 +27,7 @@ export const Input=React.forwardRef(({
                 id={id}
                 {...props}
                 ref={ref}
+                autoComplete=""
                 placeholder={placeholder}
                 />
             </div>

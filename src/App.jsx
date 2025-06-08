@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import  authService from "./AppWrite/Auth.service.js";
 import {logIn,logOut} from "./Store/AuthSlice.store.js"
 import {Outlet} from "react-router"
@@ -11,33 +11,19 @@ function App() {
   const dispatch=useDispatch();
   useEffect(()=>{
    const fetchData=async()=>{
-    //  authService.GetCurrentUser()
-    //  .then((userData)=>{
-    //   if(userData){
-    //     dispatch(logIn({userData}))
-    //   }else{
-    //     dispatch(logOut());
-    //   }
-    //  }).finally(()=>setLoading(false))
-
     try {
       const userData=await authService.GetCurrentUser();
-      // console.log("userData: ",userData);
-      
+      // console.log("userData: ",userData)
       if(userData){
         dispatch(logIn(userData))
       }else{
         dispatch(logOut())
       }
-      
-    } catch (error) {
-      throw error;
     }finally{
       setLoading(false)
     }
    }
-
-   fetchData()
+    fetchData()
   },[])
   
 
@@ -48,7 +34,7 @@ function App() {
       <main>
         
          <Outlet/>
-        {/* <RTE></RTE> */}
+
       </main>
       <Footer/>
       </div>

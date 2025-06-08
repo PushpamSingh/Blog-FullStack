@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {useForm} from "react-hook-form";
 import authService from "../AppWrite/Auth.service";
-import {logIn as storelogIn} from "../Store/AuthSlice.store"
+import {logOut, logIn as storelogIn} from "../Store/AuthSlice.store"
 import { Logo } from "./Logo";
 import {Input} from "./Input"
 import { Button } from "./Button";
@@ -19,12 +19,20 @@ export const Login=()=>{
             const session=await authService.LogIn(data);
             if(session){
                 const userdata=await authService.GetCurrentUser();
-                if(userdata) dispatch(storelogIn(userdata))
+                if(userdata) {
+                dispatch(storelogIn(userdata))
                 navigate("/")
+                }else{
+                    dispatch(logOut())
+                    navigate("/")
+                }
             }
-        } catch (error) {
-            setError(error)
+        } catch (err) {
+            // console.log("Error from login: ",err)
+            setError(err?.message || "LogIn failed !! Please Try again latter")
+            // console.log("error from login: ",error);
         }
+
     }
 
     return (

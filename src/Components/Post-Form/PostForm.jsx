@@ -90,7 +90,7 @@ export const PostForm=({post})=>{
                         onInput={((e)=>{
                             setValue('slug',slugTransformation(e.currentTarget.value),{shouldValidate:true})
                         })}
-                        readonly
+                        readOnly
                         />
                         <RTE name="content" label='Content: ' control={control} defaultValue={getValues('content')}/>
                 </div>
@@ -118,7 +118,7 @@ export const PostForm=({post})=>{
                         className="mb-4"
                         {...register("status", { required: true })}
                          />
-                        <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
+                        <Button type="submit" bgcolor={post ? "bg-green-500" : "bg-blue-500"} classname="w-full">
                             {post ? "Update" : "Submit"}
                         </Button>
                 </div>

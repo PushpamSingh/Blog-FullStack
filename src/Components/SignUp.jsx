@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux"
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../AppWrite/Auth.service";
-import { logIn as storelogIn } from "../Store/AuthSlice.store";
+import { logOut, logIn as storelogIn } from "../Store/AuthSlice.store";
 import { Logo } from "./Logo";
 import { Input } from "./Input";
 import { Button } from "./Button";
@@ -24,11 +24,16 @@ export const SignUp=()=>{
                 const userData=await authService.GetCurrentUser();
                 // console.log("User Data from signup: ",userData);
                 
-                if(userData) dispatch(storelogIn(userData));
-                navigate("/")
+                if(userData) {
+                    dispatch(storelogIn(userData));
+                    navigate("/")
+                }else{
+                    dispatch(logOut())
+                    navigate('/')
+                }
             }
-        } catch (error) {
-            setError(error)
+        } catch (err) {
+            setError(err?.message || "Sign Failed !! please Try again letter")
         }
     }
     return (
